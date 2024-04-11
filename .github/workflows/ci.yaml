@@ -36,7 +36,7 @@ jobs:
       - uses: actions/setup-python@v5
         if: github.event_name != 'workflow_dispatch'
         with:
-          python-version: '3.11'
+          python-version: '3.11' # for better datetime.fromisoformat() support
 
       - id: set-matrix
         if: github.event_name != 'workflow_dispatch'
