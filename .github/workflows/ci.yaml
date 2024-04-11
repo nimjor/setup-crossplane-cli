@@ -74,6 +74,7 @@ jobs:
           version: ${{ matrix.inputs.version }}
 
       - name: Validate version
-        shell: bash
+        # versions pulled from channels other than "stable" may not have a --version flag
+        if: matrix.inputs.version != 'latest' && matrix.inputs.channel == 'stable'
         run: |
           [[ "$(crossplane --version)" == "${{ matrix.inputs.version }}" ]] || exit 1
