@@ -78,3 +78,18 @@ jobs:
         if: matrix.inputs.version != 'latest' && matrix.inputs.channel == 'stable'
         run: |
           [[ "$(crossplane --version)" == "${{ matrix.inputs.version }}" ]] || exit 1
+
+  ci-status:
+    name: CI Status
+    runs-on: ubuntu-latest
+    needs: test-action
+    if: always()
+    steps:
+
+      - name: CI Success
+        if: ${{ !(contains(needs.*.result, 'failure')) }}
+        run: exit 0
+      
+      - name: CI Failure
+        if: ${{ contains(needs.*.result, 'failure') }}
+        run: exit 1
