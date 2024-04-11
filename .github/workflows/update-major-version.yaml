@@ -2,6 +2,7 @@ name: Update Major Version
 run-name: Move ${{ inputs.short-version }} to ${{ inputs.target-tag }}
 permissions:
   contents: write
+  actions: write
 on:
   workflow_dispatch:
     inputs:
