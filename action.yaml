@@ -1,6 +1,6 @@
 name: setup-crossplane-cli
 description: |
-  Install the Crossplane CLI for use in GitHub workflows.  By default, the latest version will be installed.
+  Install the Crossplane CLI for use in GitHub workflows.
   See https://docs.crossplane.io/latest/cli.
 inputs:
   channel:
