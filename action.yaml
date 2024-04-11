@@ -24,11 +24,11 @@ runs:
         set -eu
 
         if [ "${{ inputs.channel }}" != "stable" ]; then
-          XP_CHANNEL="${{ inputs.channel }}"
+          export XP_CHANNEL="${{ inputs.channel }}"
         fi
 
         if [ "${{ inputs.version }}" != "latest" ]; then
-          XP_VERSION="${{ inputs.version }}"
+          export XP_VERSION="${{ inputs.version }}"
         fi
 
         mkdir -p $GITHUB_WORKSPACE/bin
