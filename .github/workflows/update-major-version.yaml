@@ -1,0 +1,31 @@
+name: Update Major Version
+run-name: Move ${{ inputs.major_version }} to ${{ inputs.target }}
+on:
+  workflow_dispatch:
+    inputs:
+      target-tag:
+        description: The target semver tag to set as major (short) version
+        required: true
+      short-version:
+        description: The major (short) version to be pointed at new target-tag
+        required: true
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Git config
+        run: |
+          git config user.name GitHub Actions
+          git config user.email github-actions@github.com
+      
+      - name: Tag target
+        run: git tag -f ${{ inputs.short-version }} ${{ inputs.target-tag }}
+      
+      - name: Push tag
+        run: git push origin ${{ inputs.short-version }} --force

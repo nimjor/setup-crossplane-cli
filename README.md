@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/nimjor/setup-crossplane-cli/actions/workflows/ci.yaml/badge.svg)](https://github.com/nimjor/setup-crossplane-cli/actions/workflows/ci.yaml)
 
-Install the Crossplane CLI for use in GitHub Workflows.
+Install the [Crossplane CLI](https://docs.crossplane.io/latest/cli/command-reference/) for use in GitHub Workflows.
 
 ## Inputs
 
