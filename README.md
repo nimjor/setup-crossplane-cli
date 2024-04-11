@@ -1,2 +1,26 @@
 # setup-crossplane-cli
-Install the Crossplane CLI for use in GitHub Actions
+
+Install the Crossplane CLI for use in GitHub Workflows.
+
+## Inputs
+
+| Param | Description | Required | Default |
+| ----- | ----------- | -------- | ------- |
+| channel | The release channel from which to install. | `false` | `"stable"` |
+| version | The version of the Crossplane CLI to install. | `false` | `"latest"` |
+
+## Usage
+
+```yaml
+# Install the latest stable release
+- name: Setup Crossplane CLI
+  uses: nimjor/setup-crossplane-cli@v1
+```
+
+```yaml
+# Install a specific version
+- name: Setup Crossplane CLI
+  uses: nimjor/setup-crossplane-cli@v1
+  with:
+    version: v1.15.0
+```

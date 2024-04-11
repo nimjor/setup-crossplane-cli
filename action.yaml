@@ -1,0 +1,44 @@
+name: setup-crossplane-cli
+description: |
+  Install the Crossplane CLI for use in GitHub workflows.  By default, the latest version will be installed.
+  See https://docs.crossplane.io/latest/cli.
+inputs:
+  channel:
+    description: The release channel from which to install. Default is 'stable'.
+    required: false
+    default: stable
+  version:
+    description: The version of the Crossplane CLI to install. Default is 'latest'.
+    required: false
+    default: latest
+branding:
+  icon: 'command'
+  color: 'blue'
+runs:
+  using: composite
+  steps:
+
+    - name: Install Crossplane CLI
+      shell: bash
+      run: |
+        set -eu
+
+        if [ "${{ inputs.channel }}" != "stable" ]; then
+          XP_CHANNEL="${{ inputs.channel }}"
+        fi
+
+        if [ "${{ inputs.version }}" != "latest" ]; then
+          XP_VERSION="${{ inputs.version }}"
+        fi
+
+        mkdir -p $GITHUB_WORKSPACE/bin
+        cd $GITHUB_WORKSPACE/bin
+
+        echo "Installing Crossplane CLI..."
+
+        curl -sL "https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh" | sh
+        chmod +x $GITHUB_WORKSPACE/bin/crossplane
+
+        echo "Crossplaen CLI installed version: $($GITHUB_WORKSPACE/bin/crossplane --version)"
+        echo "$GITHUB_WORKSPACE/bin" >> $GITHUB_PATH
+        echo "$RUNNER_WORKSPACE/$(basename $GITHUB_REPOSITORY)/bin" >> $GITHUB_PATH

@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: The release channel to install from
+        required: false
+        default: stable
+        type: string
+      version:
+        description: The version to install
+        required: false
+        default: latest
+        type: string
+
+jobs:
+  set-matrix:
+    name: Set Testing Matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ env.MATRIX }}
+    steps:
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: set-matrix
+        run: echo "MATRIX=$( python ./.github/scripts/set-matrix.py )" >> $GITHUB_ENV
+      - name: echo matrix
+        run: jq <<< '${{ env.MATRIX }}'
+
+  test-action:
+    name: Test Setup Crossplane CLI
+    runs-on: ubuntu-latest
+    needs: set-matrix
+    strategy:
+      fail-fast: false
+      matrix:
+        inputs: ${{ fromJSON(needs.set-matrix.outputs.matrix) }}
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: setup-crossplane-cli-default
+        uses: ./
+
+      - name: setup-crossplane-cli
+        uses: ./
+        with:
+          channel: ${{ matrix.inputs.channel }}
+          version: ${{ matrix.inputs.version }}
+
+      - name: Validate version
+        shell: bash
+        run: |
+          [[ "$(crossplane --version)" == "${{ matrix.inputs.version }}" ]] || exit 1
