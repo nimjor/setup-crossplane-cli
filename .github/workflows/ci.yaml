@@ -5,17 +5,6 @@ on:
     branches:
       - main
   workflow_dispatch:
-    inputs:
-      channel:
-        description: The release channel to install from
-        required: false
-        default: stable
-        type: string
-      version:
-        description: The version to install
-        required: false
-        default: latest
-        type: string
 
 jobs:
   set-matrix:
@@ -28,6 +17,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
       - id: set-matrix
         run: echo "MATRIX=$( python ./.github/scripts/set-matrix.py )" >> $GITHUB_ENV
       - name: echo matrix
