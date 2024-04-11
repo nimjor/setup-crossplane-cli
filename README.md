@@ -1,5 +1,7 @@
 # setup-crossplane-cli
 
+[![CI](https://github.com/nimjor/setup-crossplane-cli/actions/workflows/ci.yaml/badge.svg)](https://github.com/nimjor/setup-crossplane-cli/actions/workflows/ci.yaml)
+
 Install the Crossplane CLI for use in GitHub Workflows.
 
 ## Inputs
@@ -23,4 +25,12 @@ Install the Crossplane CLI for use in GitHub Workflows.
   uses: nimjor/setup-crossplane-cli@v1
   with:
     version: v1.15.0
+```
+
+```yaml
+# Install from a channel other than stable
+- name: Setup Crossplane CLI
+  uses: nimjor/setup-crossplane-cli@v1
+  with:
+    channel: master
 ```
