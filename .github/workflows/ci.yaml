@@ -29,17 +29,17 @@ jobs:
         with:
           fetch-depth: 0
       
-      - if: github.event == 'workflow_dispatch'
+      - if: github.event_name == 'workflow_dispatch'
         run: |
           echo "MATRIX=[ {\"version\": \"${{ inputs.version }}\", \"channel\": \"${{ inputs.channel }}\"} ]" >> $GITHUB_ENV
 
       - uses: actions/setup-python@v5
-        if: github.event != 'workflow_dispatch'
+        if: github.event_name != 'workflow_dispatch'
         with:
           python-version: '3.11'
 
       - id: set-matrix
-        if: github.event != 'workflow_dispatch'
+        if: github.event_name != 'workflow_dispatch'
         run: echo "MATRIX=$( python ./.github/scripts/set-matrix.py )" >> $GITHUB_ENV
 
       - name: echo matrix
