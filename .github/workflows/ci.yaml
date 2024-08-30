@@ -78,7 +78,8 @@ jobs:
         # versions pulled from channels other than "stable" may not have a --version flag
         if: matrix.inputs.version != 'latest' && matrix.inputs.channel == 'stable'
         run: |
-          if (( $(echo "${{ matrix.inputs.version }} < 1.16" | bc -l) )); then
+          input_version="${{ matrix.inputs.version }}"
+          if (( $(echo "${input_version:1} < 1.16" | bc -l) )); then
             [[ "$(crossplane --version)" =~ *"${{ matrix.inputs.version }}"* ]] || exit 1
           else
             [[ "$(crossplane version --client)" =~ *"${{ matrix.inputs.version }}"* ]] || exit 1
