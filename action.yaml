@@ -39,10 +39,8 @@ runs:
         curl -sL "https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh" | sh
         chmod +x $GITHUB_WORKSPACE/bin/crossplane
 
-        set +e
         $GITHUB_WORKSPACE/bin/crossplane version --client &> /dev/null
         code=$?
-        set -e
         if [ $code -eq 0 ]; then
           echo "Crossplane CLI installed version: $($GITHUB_WORKSPACE/bin/crossplane version --client)"
         else
