@@ -39,10 +39,13 @@ runs:
         curl -sL "https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh" | sh
         chmod +x $GITHUB_WORKSPACE/bin/crossplane
 
-        if (( $(echo "$XP_VERSION < 1.16" | bc -l) )); then
-          echo "Crossplane CLI installed version: $($GITHUB_WORKSPACE/bin/crossplane --version)"
-        else
+        crossplane version --client &> /dev/null
+        code=$?
+        if [ $code -eq 0 ]; then
           echo "Crossplane CLI installed version: $($GITHUB_WORKSPACE/bin/crossplane version --client)"
+        else
+          echo "Crossplane CLI installed version: $($GITHUB_WORKSPACE/bin/crossplane --version)"
         fi
+        
         echo "$GITHUB_WORKSPACE/bin" >> $GITHUB_PATH
         echo "$RUNNER_WORKSPACE/$(basename $GITHUB_REPOSITORY)/bin" >> $GITHUB_PATH
