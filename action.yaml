@@ -43,6 +43,6 @@ runs:
         if (( $(echo "$XP_VERSION < 1.16" | bc -l) )); then
           version_command="--version"
         fi
-        echo "Crossplane CLI installed version: $($GITHUB_WORKSPACE/bin/crossplane $version_command)"
+        echo "Crossplane CLI installed version: $($GITHUB_WORKSPACE/bin/crossplane ${version_command})"
         echo "$GITHUB_WORKSPACE/bin" >> $GITHUB_PATH
         echo "$RUNNER_WORKSPACE/$(basename $GITHUB_REPOSITORY)/bin" >> $GITHUB_PATH

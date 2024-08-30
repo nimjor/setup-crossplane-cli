@@ -82,7 +82,7 @@ jobs:
           if (( $(echo "${{ matrix.inputs.version }} < 1.16" | bc -l) )); then
             version_command="--version"
           fi
-          [[ "$(crossplane $version_command)" =~ *"${{ matrix.inputs.version }}"* ]] || exit 1
+          [[ "$(crossplane ${version_command})" =~ *"${{ matrix.inputs.version }}"* ]] || exit 1
 
   ci-status:
     name: CI Status
