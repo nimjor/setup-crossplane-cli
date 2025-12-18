@@ -36,7 +36,7 @@ runs:
 
         echo "Installing Crossplane CLI..."
 
-        curl -sL "https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh" | sh
+        curl -sL -H 'Authorization: Bearer ${{ github.token }}' "https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh" | sh
         chmod +x $GITHUB_WORKSPACE/bin/crossplane
 
         set +e
